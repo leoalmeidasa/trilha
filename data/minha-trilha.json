@@ -1,0 +1,968 @@
+{
+  "version": 1,
+  "profile": {
+    "name": "Leonardo Almeida"
+  },
+  "settings": {
+    "streakThreshold": 0.8,
+    "currentPhaseId": "mvtm83d8g8c9ur"
+  },
+  "track": {
+    "name": "Trilha do Leonardo · DevOps pleno → sênior internacional",
+    "templateId": "devops-ingles",
+    "phases": [
+      {
+        "id": "mvtm83d8g8c9ur",
+        "name": "Fase 1 · Base + CKA (meses 1–3)",
+        "goal": "Fundamentos sólidos de Linux, redes e containers; CKA agendada.",
+        "targetDate": "2027-01-31",
+        "topics": [
+          {
+            "id": "mvtm83d8qfcjk1",
+            "name": "Linux: processos, systemd, permissões, filesystems",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "linux"
+            ],
+            "resourceIds": [
+              "bandit"
+            ]
+          },
+          {
+            "id": "mvtm83d8mp85ug",
+            "name": "Bash e manipulação de texto (grep, sed, awk, jq)",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "bash",
+              "linux"
+            ],
+            "resourceIds": []
+          },
+          {
+            "id": "mvtm83d85vesgr",
+            "name": "Python para automação",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "python"
+            ],
+            "resourceIds": []
+          },
+          {
+            "id": "mvtm83d8hn1quz",
+            "name": "Redes: OSI, TCP/IP, MTU/MSS (revisar e documentar casos reais)",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "networking"
+            ],
+            "resourceIds": []
+          },
+          {
+            "id": "mvtm83d821dmj3",
+            "name": "DNS (systemd-resolved, split DNS), HTTP/HTTPS e TLS",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "networking",
+              "dns",
+              "http",
+              "tls"
+            ],
+            "resourceIds": []
+          },
+          {
+            "id": "mvtm83d8wlh7me",
+            "name": "SSH e firewall (nftables)",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "ssh",
+              "linux",
+              "security"
+            ],
+            "resourceIds": []
+          },
+          {
+            "id": "mvtm83d8pjv69k",
+            "name": "Nginx: reverse proxy e load balancer",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "nginx",
+              "networking"
+            ],
+            "resourceIds": []
+          },
+          {
+            "id": "mvtm83d8dtz0ql",
+            "name": "Git avançado (rebase, bisect, hooks)",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "git"
+            ],
+            "resourceIds": []
+          },
+          {
+            "id": "mvtm83d85th4e8",
+            "name": "Docker: imagens, multi-stage, segurança",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "docker"
+            ],
+            "resourceIds": [
+              "docker-docs",
+              "descomplicando-docker"
+            ]
+          },
+          {
+            "id": "mvtm83d8q77ux1",
+            "name": "Kubernetes: arquitetura e workloads",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "kubernetes",
+              "cka"
+            ],
+            "resourceIds": [
+              "k8s-docs",
+              "kodekloud"
+            ]
+          },
+          {
+            "id": "mvtm83d8w9l9f7",
+            "name": "Kubernetes: Services, Ingress e rede",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "kubernetes",
+              "cka",
+              "networking"
+            ],
+            "resourceIds": []
+          },
+          {
+            "id": "mvtm83d8ocukpd",
+            "name": "Kubernetes: storage, RBAC e segurança",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "kubernetes",
+              "cka",
+              "security"
+            ],
+            "resourceIds": []
+          },
+          {
+            "id": "mvtm83d8on8axi",
+            "name": "Kubernetes: requests/limits, QoS e capacity planning",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "kubernetes",
+              "cka",
+              "sre"
+            ],
+            "resourceIds": []
+          },
+          {
+            "id": "mvtm83d84aq71c",
+            "name": "Kubernetes: troubleshooting",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "kubernetes",
+              "cka"
+            ],
+            "resourceIds": [
+              "killercoda"
+            ]
+          },
+          {
+            "id": "mvtm83d8dkrqpp",
+            "name": "OpenShift: Routes, SCC, ImageStreams e diferenças do k8s",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "kubernetes",
+              "openshift"
+            ],
+            "resourceIds": []
+          },
+          {
+            "id": "mvtm83d80f92fk",
+            "name": "Kubernetes the hard way",
+            "area": "tech",
+            "level": "optional",
+            "status": "todo",
+            "tags": [
+              "kubernetes",
+              "tls"
+            ],
+            "resourceIds": [
+              "k8s-the-hard-way"
+            ]
+          },
+          {
+            "id": "mvtm83d83315i6",
+            "name": "Go básico",
+            "area": "tech",
+            "level": "optional",
+            "status": "todo",
+            "tags": [
+              "go"
+            ],
+            "resourceIds": []
+          },
+          {
+            "id": "mvtm83d8n7ituj",
+            "name": "Listening 0,75x com legenda em inglês",
+            "area": "english",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "listening"
+            ],
+            "resourceIds": [
+              "yt-nana",
+              "voa-learning-english"
+            ]
+          },
+          {
+            "id": "mvtm83d8rh2i1h",
+            "name": "Shadowing diário",
+            "area": "english",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "shadowing"
+            ],
+            "resourceIds": [
+              "ted",
+              "youglish"
+            ]
+          },
+          {
+            "id": "mvtm83d8il2qs8",
+            "name": "Vocabulário técnico falado (Anki)",
+            "area": "english",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "vocabulary"
+            ],
+            "resourceIds": [
+              "anki"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "mvtm83d82en5il",
+        "name": "Fase 2 · IaC + GitOps (meses 4–6)",
+        "goal": "CKA aprovada; app próprio rodando via Terraform + Helm + Argo CD.",
+        "targetDate": "2027-04-30",
+        "topics": [
+          {
+            "id": "mvtm83d8r6i669",
+            "name": "Prova CKA",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "cka",
+              "certification"
+            ],
+            "resourceIds": [
+              "cert-cka",
+              "killer-sh"
+            ]
+          },
+          {
+            "id": "mvtm83d89cj4fj",
+            "name": "Terraform: state, módulos, workspaces",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "terraform",
+              "iac"
+            ],
+            "resourceIds": []
+          },
+          {
+            "id": "mvtm83d8ypewlg",
+            "name": "Ansible: playbooks e roles",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "ansible",
+              "iac"
+            ],
+            "resourceIds": []
+          },
+          {
+            "id": "mvtm83d8uon43q",
+            "name": "Azure Pipelines avançado: templates YAML, environments, approvals",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "azure",
+              "cicd"
+            ],
+            "resourceIds": [
+              "ms-learn"
+            ]
+          },
+          {
+            "id": "mvtm83d8h698hg",
+            "name": "CI/CD com GitHub Actions (portfólio público)",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "cicd",
+              "github-actions"
+            ],
+            "resourceIds": []
+          },
+          {
+            "id": "mvtm83d8n6ajjh",
+            "name": "Azure: fundamentos e AKS",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "azure",
+              "aks"
+            ],
+            "resourceIds": []
+          },
+          {
+            "id": "mvtm83d8ltf64l",
+            "name": "Helm: charts próprios",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "helm",
+              "kubernetes"
+            ],
+            "resourceIds": []
+          },
+          {
+            "id": "mvtm83d8x75b5a",
+            "name": "GitOps com Argo CD",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "gitops",
+              "argocd"
+            ],
+            "resourceIds": []
+          },
+          {
+            "id": "mvtm83d8zgzrbo",
+            "name": "Tekton / OpenShift Pipelines",
+            "area": "tech",
+            "level": "optional",
+            "status": "todo",
+            "tags": [
+              "cicd",
+              "openshift",
+              "kubernetes"
+            ],
+            "resourceIds": []
+          },
+          {
+            "id": "mvtm83d824sfjf",
+            "name": "Gestão de artefatos (registry, Nexus)",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "artifacts",
+              "docker"
+            ],
+            "resourceIds": []
+          },
+          {
+            "id": "mvtm83d836c8ix",
+            "name": "AWS fundamentos",
+            "area": "tech",
+            "level": "optional",
+            "status": "todo",
+            "tags": [
+              "aws"
+            ],
+            "resourceIds": []
+          },
+          {
+            "id": "mvtm83d8qwvqkl",
+            "name": "Pulumi ou CDK",
+            "area": "tech",
+            "level": "optional",
+            "status": "todo",
+            "tags": [
+              "iac"
+            ],
+            "resourceIds": []
+          },
+          {
+            "id": "mvtm83d8x5hn0c",
+            "name": "Listening em 1x",
+            "area": "english",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "listening"
+            ],
+            "resourceIds": [
+              "k8s-podcast"
+            ]
+          },
+          {
+            "id": "mvtm83d8goz9am",
+            "name": "Conversação 1x por semana",
+            "area": "english",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "speaking"
+            ],
+            "resourceIds": [
+              "tandem",
+              "italki"
+            ]
+          },
+          {
+            "id": "mvtm83d8qcu05z",
+            "name": "Talks da KubeCon",
+            "area": "english",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "listening"
+            ],
+            "resourceIds": [
+              "yt-cncf"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "mvtm83d8gvkfn2",
+        "name": "Fase 3 · Observabilidade + Segurança (meses 7–9)",
+        "goal": "Stack de observabilidade no app; segunda certificação.",
+        "targetDate": "2027-07-31",
+        "topics": [
+          {
+            "id": "mvtm83d88ya3hf",
+            "name": "Prometheus e PromQL",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "prometheus",
+              "observability"
+            ],
+            "resourceIds": []
+          },
+          {
+            "id": "mvtm83d85rygv3",
+            "name": "Grafana e Loki",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "grafana",
+              "loki",
+              "observability"
+            ],
+            "resourceIds": []
+          },
+          {
+            "id": "mvtm83d8o45hju",
+            "name": "OpenTelemetry e tracing",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "opentelemetry",
+              "tracing",
+              "observability"
+            ],
+            "resourceIds": []
+          },
+          {
+            "id": "mvtm83d8p75zo3",
+            "name": "Segredos: Vault, Sealed Secrets, ESO, SOPS",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "secrets",
+              "security"
+            ],
+            "resourceIds": []
+          },
+          {
+            "id": "mvtm83d8q954v4",
+            "name": "Rotação de credenciais e CA de cluster (k3s) + secret scanning",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "secrets",
+              "security",
+              "kubernetes"
+            ],
+            "resourceIds": []
+          },
+          {
+            "id": "mvtm83d82ks78c",
+            "name": "Supply chain: Trivy, SBOM, cosign",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "security",
+              "docker",
+              "cicd"
+            ],
+            "resourceIds": []
+          },
+          {
+            "id": "mvtm83d8jsmhhz",
+            "name": "NetworkPolicy e Pod Security",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "kubernetes",
+              "security"
+            ],
+            "resourceIds": []
+          },
+          {
+            "id": "mvtm83d8npgvdq",
+            "name": "AZ-400 ou Terraform Associate",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "certification",
+              "azure",
+              "terraform"
+            ],
+            "resourceIds": [
+              "cert-az400",
+              "cert-terraform"
+            ]
+          },
+          {
+            "id": "mvtm83d8rbcerg",
+            "name": "Service mesh (Istio/Linkerd)",
+            "area": "tech",
+            "level": "optional",
+            "status": "todo",
+            "tags": [
+              "kubernetes",
+              "networking"
+            ],
+            "resourceIds": []
+          },
+          {
+            "id": "mvtm83d88w6wp7",
+            "name": "Listening sem legenda",
+            "area": "english",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "listening"
+            ],
+            "resourceIds": [
+              "yt-fireship",
+              "devops-paradox"
+            ]
+          },
+          {
+            "id": "mvtm83d80p0sdc",
+            "name": "Escrita técnica: READMEs e PRs em inglês",
+            "area": "english",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "writing"
+            ],
+            "resourceIds": [
+              "hellotalk"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "mvtm83d8cywk62",
+        "name": "Fase 4 · SRE + Mercado (meses 10–12)",
+        "goal": "Portfólio público e primeiras entrevistas internacionais.",
+        "targetDate": "2027-10-31",
+        "topics": [
+          {
+            "id": "mvtm83d836gvds",
+            "name": "SLO, SLI e error budget",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "sre",
+              "slo"
+            ],
+            "resourceIds": [
+              "sre-books"
+            ]
+          },
+          {
+            "id": "mvtm83d8ooe35z",
+            "name": "Resposta a incidentes e postmortem",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "sre",
+              "incident"
+            ],
+            "resourceIds": [
+              "howtheysre"
+            ]
+          },
+          {
+            "id": "mvtm83d87m8o6e",
+            "name": "Disponibilidade e cloud design patterns",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "availability",
+              "system-design"
+            ],
+            "resourceIds": []
+          },
+          {
+            "id": "mvtm83d8bp7inf",
+            "name": "System design para entrevista",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "system-design",
+              "interview"
+            ],
+            "resourceIds": [
+              "system-design-primer"
+            ]
+          },
+          {
+            "id": "mvtm83d8z0c06s",
+            "name": "Teste de carga (k6)",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "load-testing",
+              "sre"
+            ],
+            "resourceIds": []
+          },
+          {
+            "id": "mvtm83d8lq0bbm",
+            "name": "Revisão de entrevista técnica",
+            "area": "tech",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "interview"
+            ],
+            "resourceIds": [
+              "devops-exercises"
+            ]
+          },
+          {
+            "id": "mvtm83d8t0sbj2",
+            "name": "Mock interviews em inglês",
+            "area": "english",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "interview",
+              "speaking"
+            ],
+            "resourceIds": [
+              "preply",
+              "italki"
+            ]
+          },
+          {
+            "id": "mvtm83d8zi7s4w",
+            "name": "Currículo e LinkedIn em inglês",
+            "area": "english",
+            "level": "essential",
+            "status": "todo",
+            "tags": [
+              "writing",
+              "interview"
+            ],
+            "resourceIds": []
+          }
+        ]
+      }
+    ]
+  },
+  "weeklyGoals": {
+    "0": [
+      {
+        "area": "tech",
+        "title": "Escrever README do lab da semana",
+        "minutes": 60
+      },
+      {
+        "area": "english",
+        "title": "Podcast passivo",
+        "minutes": 20
+      }
+    ],
+    "1": [
+      {
+        "area": "tech",
+        "title": "Estudo: {topic}",
+        "minutes": 30
+      },
+      {
+        "area": "tech",
+        "title": "Prática: {topic}",
+        "minutes": 30
+      },
+      {
+        "area": "english",
+        "title": "Escuta ativa: 1 vídeo, 3 passadas",
+        "minutes": 20
+      },
+      {
+        "area": "english",
+        "title": "Shadowing de 5 frases",
+        "minutes": 10
+      },
+      {
+        "area": "english",
+        "title": "Podcast passivo",
+        "minutes": 10
+      }
+    ],
+    "2": [
+      {
+        "area": "tech",
+        "title": "Estudo: {topic}",
+        "minutes": 30
+      },
+      {
+        "area": "tech",
+        "title": "Prática: {topic}",
+        "minutes": 30
+      },
+      {
+        "area": "english",
+        "title": "Escuta ativa: 1 vídeo, 3 passadas",
+        "minutes": 20
+      },
+      {
+        "area": "english",
+        "title": "Shadowing de 5 frases",
+        "minutes": 10
+      },
+      {
+        "area": "english",
+        "title": "Podcast passivo",
+        "minutes": 10
+      }
+    ],
+    "3": [
+      {
+        "area": "tech",
+        "title": "Estudo: {topic}",
+        "minutes": 30
+      },
+      {
+        "area": "tech",
+        "title": "Prática: {topic}",
+        "minutes": 30
+      },
+      {
+        "area": "english",
+        "title": "Escuta ativa: 1 vídeo, 3 passadas",
+        "minutes": 20
+      },
+      {
+        "area": "english",
+        "title": "Shadowing de 5 frases",
+        "minutes": 10
+      },
+      {
+        "area": "english",
+        "title": "Podcast passivo",
+        "minutes": 10
+      }
+    ],
+    "4": [
+      {
+        "area": "tech",
+        "title": "Estudo: {topic}",
+        "minutes": 30
+      },
+      {
+        "area": "tech",
+        "title": "Prática: {topic}",
+        "minutes": 30
+      },
+      {
+        "area": "english",
+        "title": "Escuta ativa: 1 vídeo, 3 passadas",
+        "minutes": 20
+      },
+      {
+        "area": "english",
+        "title": "Shadowing de 5 frases",
+        "minutes": 10
+      },
+      {
+        "area": "english",
+        "title": "Podcast passivo",
+        "minutes": 10
+      }
+    ],
+    "5": [
+      {
+        "area": "tech",
+        "title": "Estudo: {topic}",
+        "minutes": 30
+      },
+      {
+        "area": "tech",
+        "title": "Prática: {topic}",
+        "minutes": 30
+      },
+      {
+        "area": "english",
+        "title": "Escuta ativa: 1 vídeo, 3 passadas",
+        "minutes": 20
+      },
+      {
+        "area": "english",
+        "title": "Shadowing de 5 frases",
+        "minutes": 10
+      },
+      {
+        "area": "english",
+        "title": "Podcast passivo",
+        "minutes": 10
+      }
+    ],
+    "6": [
+      {
+        "area": "tech",
+        "title": "Lab prático: {topic}",
+        "minutes": 150
+      },
+      {
+        "area": "english",
+        "title": "Podcast passivo",
+        "minutes": 20
+      }
+    ]
+  },
+  "notes": [
+    {
+      "id": "mvtm83d8rygmlr",
+      "title": "Como uso esta trilha",
+      "topicId": null,
+      "tags": [
+        "plano"
+      ],
+      "updatedAt": "2026-10-29T14:05:10.796Z",
+      "body": "# Plano\n- Proporção: **70% técnico / 30% inglês** no primeiro ano; depois inverter o peso para inglês + entrevistas.\n- Inglês: leitura ok, foco em **listening** (escuta ativa em 3 passadas + shadowing).\n- Estudar a parte técnica **em inglês** sempre que possível: conta para os dois lados.\n- 1 lab a cada 2 semanas no repositório `devops-labs`, README em inglês.\n\n# Regras dos labs\n- Recriar o cenário no lab; nunca usar print ou config do ambiente real.\n- Nada de nome de cliente, IP, hostname, kubeconfig, token ou `.env`."
+    }
+  ],
+  "labs": [
+    {
+      "id": "mvtm83d8ue5xhu",
+      "title": "01 · MTU e MSS clamp em VPN com nftables",
+      "status": "draft",
+      "repoUrl": "",
+      "topicId": "mvtm83d8hn1quz"
+    },
+    {
+      "id": "mvtm83d8xgzc2c",
+      "title": "02 · Split DNS por interface com systemd-resolved",
+      "status": "draft",
+      "repoUrl": "",
+      "topicId": "mvtm83d821dmj3"
+    },
+    {
+      "id": "mvtm83d88ync14",
+      "title": "03 · Trilha: site estático em Nginx não-root (Docker hardening)",
+      "status": "draft",
+      "repoUrl": "",
+      "topicId": "mvtm83d85th4e8"
+    },
+    {
+      "id": "mvtm83d8l6sugp",
+      "title": "04 · Requests/limits: medir antes de aplicar",
+      "status": "draft",
+      "repoUrl": "",
+      "topicId": "mvtm83d8on8axi"
+    },
+    {
+      "id": "mvtm83d8r2fwng",
+      "title": "05 · Do Azure Pipelines ao GitHub Actions: mesmo pipeline nos dois",
+      "status": "draft",
+      "repoUrl": "",
+      "topicId": "mvtm83d8uon43q"
+    },
+    {
+      "id": "mvtm83d8dgg6jh",
+      "title": "06 · Kubeconfig vazado: detectar com gitleaks e rotacionar a CA do k3s",
+      "status": "draft",
+      "repoUrl": "",
+      "topicId": "mvtm83d8q954v4"
+    },
+    {
+      "id": "mvtm83d86gl6uy",
+      "title": "07 · OpenShift x Kubernetes: o mesmo app nos dois",
+      "status": "draft",
+      "repoUrl": "",
+      "topicId": "mvtm83d8dkrqpp"
+    }
+  ],
+  "customResources": [],
+  "days": {}
+}
