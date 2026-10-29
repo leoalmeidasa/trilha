@@ -1,0 +1,23 @@
+services:
+  trilha:
+    build: .
+    image: trilha:local
+    container_name: trilha
+    # Uses the default docker0 bridge instead of creating a new network,
+    # which avoids address-pool clashes with VPN routes.
+    network_mode: bridge
+    ports:
+      - "127.0.0.1:${TRILHA_PORT:-8790}:8080"
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    # Live editing: the repo files are mounted over the copies baked into the image.
+    volumes:
+      - ./index.html:/usr/share/nginx/html/index.html:ro
+      - ./assets:/usr/share/nginx/html/assets:ro
+      - ./data:/usr/share/nginx/html/data:ro
