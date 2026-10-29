@@ -1,0 +1,57 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Validate data files
+        run: node scripts/validate.mjs
+      - name: Syntax check JS
+        run: for f in assets/js/*.js; do node --check "$f"; done
+      - name: Unit tests
+        run: node --test
+      - name: Lint Dockerfile
+        uses: hadolint/hadolint-action@v3.1.0
+      - name: Build image
+        run: docker build -t trilha:ci .
+      - name: Smoke test
+        run: |
+          docker run -d --name trilha -p 8080:8080 trilha:ci
+          for i in $(seq 1 20); do curl -fsS http://127.0.0.1:8080/healthz && break; sleep 1; done
+          curl -fsS http://127.0.0.1:8080/ | grep -q '<title>Trilha</title>'
+          curl -fsS http://127.0.0.1:8080/data/resources.json | node -e 'JSON.parse(require("fs").readFileSync(0))'
+
+  pages:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: validate
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Collect site files
+        run: |
+          mkdir -p _site
+          cp -r index.html assets data _site/
+          touch _site/.nojekyll
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deploy
+        uses: actions/deploy-pages@v4
