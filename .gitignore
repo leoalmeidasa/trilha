@@ -1,0 +1,7 @@
+node_modules/
+_site/
+*.log
+.env
+.env.*
+# personal backups exported from the app
+trilha-backup-*.json

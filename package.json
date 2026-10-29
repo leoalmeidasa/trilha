@@ -1,0 +1,11 @@
+{
+  "name": "trilha",
+  "private": true,
+  "type": "module",
+  "description": "Study track for DevOps + English with daily goals. Static site, no build step.",
+  "scripts": {
+    "validate": "node scripts/validate.mjs",
+    "test": "node --test"
+  },
+  "license": "MIT"
+}
