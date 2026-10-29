@@ -1,0 +1,79 @@
+{
+  "id": "devops-ingles",
+  "name": "DevOps + Inglês (12 meses)",
+  "phases": [
+    {
+      "name": "Fase 1 · Base + CKA (meses 1–3)",
+      "goal": "Fundamentos sólidos de Linux, redes e containers; CKA agendada.",
+      "topics": [
+        { "name": "Linux: processos, systemd, permissões, filesystems", "area": "tech", "tags": ["linux"], "resources": ["bandit"] },
+        { "name": "Bash e manipulação de texto (grep, sed, awk, jq)", "area": "tech", "tags": ["bash", "linux"] },
+        { "name": "Python para automação", "area": "tech", "tags": ["python"] },
+        { "name": "Redes: OSI, TCP/IP, MTU, roteamento", "area": "tech", "tags": ["networking"] },
+        { "name": "DNS, HTTP/HTTPS e TLS", "area": "tech", "tags": ["networking", "dns", "http", "tls"] },
+        { "name": "SSH e firewall (nftables)", "area": "tech", "tags": ["ssh", "linux", "security"] },
+        { "name": "Nginx: reverse proxy e load balancer", "area": "tech", "tags": ["nginx", "networking"] },
+        { "name": "Git avançado (rebase, bisect, hooks)", "area": "tech", "tags": ["git"] },
+        { "name": "Docker: imagens, multi-stage, segurança", "area": "tech", "tags": ["docker"], "resources": ["docker-docs", "descomplicando-docker"] },
+        { "name": "Kubernetes: arquitetura e workloads", "area": "tech", "tags": ["kubernetes", "cka"], "resources": ["k8s-docs", "kodekloud"] },
+        { "name": "Kubernetes: Services, Ingress e rede", "area": "tech", "tags": ["kubernetes", "cka", "networking"] },
+        { "name": "Kubernetes: storage, RBAC e segurança", "area": "tech", "tags": ["kubernetes", "cka", "security"] },
+        { "name": "Kubernetes: troubleshooting", "area": "tech", "tags": ["kubernetes", "cka"], "resources": ["killercoda"] },
+        { "name": "Kubernetes the hard way", "area": "tech", "level": "optional", "tags": ["kubernetes", "tls"], "resources": ["k8s-the-hard-way"] },
+        { "name": "Go básico", "area": "tech", "level": "optional", "tags": ["go"] },
+        { "name": "Listening 0,75x com legenda em inglês", "area": "english", "tags": ["listening"], "resources": ["yt-nana", "voa-learning-english"] },
+        { "name": "Shadowing diário", "area": "english", "tags": ["shadowing"], "resources": ["ted", "youglish"] },
+        { "name": "Vocabulário técnico falado (Anki)", "area": "english", "tags": ["vocabulary"], "resources": ["anki"] }
+      ]
+    },
+    {
+      "name": "Fase 2 · IaC + GitOps (meses 4–6)",
+      "goal": "CKA aprovada; app próprio rodando via Terraform + Helm + Argo CD.",
+      "topics": [
+        { "name": "Prova CKA", "area": "tech", "tags": ["cka", "certification"], "resources": ["cert-cka", "killer-sh"] },
+        { "name": "Terraform: state, módulos, workspaces", "area": "tech", "tags": ["terraform", "iac"] },
+        { "name": "Ansible: playbooks e roles", "area": "tech", "tags": ["ansible", "iac"] },
+        { "name": "CI/CD com GitHub Actions", "area": "tech", "tags": ["cicd", "github-actions"] },
+        { "name": "Azure: fundamentos e AKS", "area": "tech", "tags": ["azure", "aks"] },
+        { "name": "Helm: charts próprios", "area": "tech", "tags": ["helm", "kubernetes"] },
+        { "name": "GitOps com Argo CD", "area": "tech", "tags": ["gitops", "argocd"] },
+        { "name": "Gestão de artefatos (registry, Nexus)", "area": "tech", "tags": ["artifacts", "docker"] },
+        { "name": "AWS fundamentos", "area": "tech", "level": "optional", "tags": ["aws"] },
+        { "name": "Pulumi ou CDK", "area": "tech", "level": "optional", "tags": ["iac"] },
+        { "name": "Listening em 1x", "area": "english", "tags": ["listening"], "resources": ["k8s-podcast"] },
+        { "name": "Conversação 1x por semana", "area": "english", "tags": ["speaking"], "resources": ["tandem", "italki"] },
+        { "name": "Talks da KubeCon", "area": "english", "tags": ["listening"], "resources": ["yt-cncf"] }
+      ]
+    },
+    {
+      "name": "Fase 3 · Observabilidade + Segurança (meses 7–9)",
+      "goal": "Stack de observabilidade no app; segunda certificação.",
+      "topics": [
+        { "name": "Prometheus e PromQL", "area": "tech", "tags": ["prometheus", "observability"] },
+        { "name": "Grafana e Loki", "area": "tech", "tags": ["grafana", "loki", "observability"] },
+        { "name": "OpenTelemetry e tracing", "area": "tech", "tags": ["opentelemetry", "tracing", "observability"] },
+        { "name": "Segredos: Vault, Sealed Secrets, ESO, SOPS", "area": "tech", "tags": ["secrets", "security"] },
+        { "name": "Supply chain: Trivy, SBOM, cosign", "area": "tech", "tags": ["security", "docker", "cicd"] },
+        { "name": "NetworkPolicy e Pod Security", "area": "tech", "tags": ["kubernetes", "security"] },
+        { "name": "AZ-400 ou Terraform Associate", "area": "tech", "tags": ["certification", "azure", "terraform"], "resources": ["cert-az400", "cert-terraform"] },
+        { "name": "Service mesh (Istio/Linkerd)", "area": "tech", "level": "optional", "tags": ["kubernetes", "networking"] },
+        { "name": "Listening sem legenda", "area": "english", "tags": ["listening"], "resources": ["yt-fireship", "devops-paradox"] },
+        { "name": "Escrita técnica: READMEs e PRs em inglês", "area": "english", "tags": ["writing"], "resources": ["hellotalk"] }
+      ]
+    },
+    {
+      "name": "Fase 4 · SRE + Mercado (meses 10–12)",
+      "goal": "Portfólio público e primeiras entrevistas internacionais.",
+      "topics": [
+        { "name": "SLO, SLI e error budget", "area": "tech", "tags": ["sre", "slo"], "resources": ["sre-books"] },
+        { "name": "Resposta a incidentes e postmortem", "area": "tech", "tags": ["sre", "incident"], "resources": ["howtheysre"] },
+        { "name": "Disponibilidade e cloud design patterns", "area": "tech", "tags": ["availability", "system-design"] },
+        { "name": "System design para entrevista", "area": "tech", "tags": ["system-design", "interview"], "resources": ["system-design-primer"] },
+        { "name": "Teste de carga (k6)", "area": "tech", "tags": ["load-testing", "sre"] },
+        { "name": "Revisão de entrevista técnica", "area": "tech", "tags": ["interview"], "resources": ["devops-exercises"] },
+        { "name": "Mock interviews em inglês", "area": "english", "tags": ["interview", "speaking"], "resources": ["preply", "italki"] },
+        { "name": "Currículo e LinkedIn em inglês", "area": "english", "tags": ["writing", "interview"] }
+      ]
+    }
+  ]
+}

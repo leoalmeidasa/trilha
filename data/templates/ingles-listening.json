@@ -1,0 +1,41 @@
+{
+  "id": "ingles-listening",
+  "name": "Inglês: listening para TI (6 meses)",
+  "phases": [
+    {
+      "name": "Mês 1–2 · Ouvido",
+      "goal": "Entender vídeos técnicos em 0,75x com legenda em inglês.",
+      "topics": [
+        { "name": "Escuta ativa: 3 passadas por vídeo", "area": "english", "tags": ["listening"], "resources": ["yt-nana", "voa-learning-english"] },
+        { "name": "Shadowing de frases", "area": "english", "tags": ["shadowing"], "resources": ["ted", "youglish"] },
+        { "name": "Vocabulário com Anki", "area": "english", "tags": ["vocabulary"], "resources": ["anki"] }
+      ]
+    },
+    {
+      "name": "Mês 3–4 · Velocidade",
+      "goal": "Vídeos em 1x; legenda só para conferir.",
+      "topics": [
+        { "name": "Podcasts técnicos", "area": "english", "tags": ["listening"], "resources": ["k8s-podcast", "devops-paradox"] },
+        { "name": "Talks com sotaques variados", "area": "english", "tags": ["listening"], "resources": ["yt-cncf"] },
+        { "name": "Pronúncia", "area": "english", "tags": ["pronunciation"], "resources": ["elsa", "youglish"] }
+      ]
+    },
+    {
+      "name": "Mês 5–6 · Conversa",
+      "goal": "Aguentar 30 min de call técnica.",
+      "topics": [
+        { "name": "Conversação semanal", "area": "english", "tags": ["speaking"], "resources": ["tandem", "cambly"] },
+        { "name": "Simulação de entrevista", "area": "english", "tags": ["interview", "speaking"], "resources": ["italki", "preply"] }
+      ]
+    }
+  ],
+  "weeklyGoals": {
+    "0": [{ "area": "english", "title": "Podcast passivo", "minutes": 30 }],
+    "1": [{ "area": "english", "title": "Escuta ativa: {topic}", "minutes": 20 }, { "area": "english", "title": "Shadowing de 5 frases", "minutes": 10 }],
+    "2": [{ "area": "english", "title": "Escuta ativa: {topic}", "minutes": 20 }, { "area": "english", "title": "Shadowing de 5 frases", "minutes": 10 }],
+    "3": [{ "area": "english", "title": "Escuta ativa: {topic}", "minutes": 20 }, { "area": "english", "title": "Shadowing de 5 frases", "minutes": 10 }],
+    "4": [{ "area": "english", "title": "Escuta ativa: {topic}", "minutes": 20 }, { "area": "english", "title": "Shadowing de 5 frases", "minutes": 10 }],
+    "5": [{ "area": "english", "title": "Escuta ativa: {topic}", "minutes": 20 }, { "area": "english", "title": "Shadowing de 5 frases", "minutes": 10 }],
+    "6": [{ "area": "english", "title": "Conversação ou vídeo longo", "minutes": 45 }]
+  }
+}

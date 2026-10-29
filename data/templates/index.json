@@ -1,0 +1,16 @@
+[
+  {
+    "id": "devops-ingles",
+    "name": "DevOps + Inglês (12 meses)",
+    "description": "4 fases: Base + CKA, IaC + GitOps, Observabilidade + Segurança, SRE + Mercado. Tópicos técnicos do roadmap.sh e inglês com foco em listening.",
+    "source": "https://roadmap.sh/devops",
+    "file": "data/templates/devops-ingles.json"
+  },
+  {
+    "id": "ingles-listening",
+    "name": "Inglês: listening para TI (6 meses)",
+    "description": "Para quem já lê bem mas não entende áudio. Legenda em inglês → sem legenda → conversação → entrevista.",
+    "source": "",
+    "file": "data/templates/ingles-listening.json"
+  }
+]
