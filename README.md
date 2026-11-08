@@ -30,11 +30,35 @@ docker compose up -d --build
 - Compose uses the default `bridge` network and creates no new Docker network.
 - `index.html`, `assets/` and `data/` are bind-mounted, so edits show up on reload.
 
-Without Docker: `python3 -m http.server 8790 --bind 127.0.0.1`.
+Without Docker: `python3 -m http.server 8790 --bind 127.0.0.1` (works, but without the security headers and with slower, single-threaded speech models).
+
+## Set up Conversa (voice chat with Claude)
+
+Everything except the **Conversa** tab works without any account or key. Conversa needs an **Anthropic API key**:
+
+> A Claude Code, Claude Pro or Claude Max subscription is **not** an API key. Those logins only work in Claude Code and claude.ai and cannot be used by this app. API usage is billed separately, per use.
+
+1. Create an account at [console.anthropic.com](https://console.anthropic.com/) and add a small amount of credit (*Billing*).
+2. Recommended: set a monthly spend limit (*Settings → Limits*).
+3. Create a key in *Settings → API keys*. It starts with `sk-ant-`. Copy it.
+4. Open the app (preferably in Chrome or Chromium), go to **Conversa** and paste the key in the setup form.
+5. Choose the model and Sam's voice:
+   - **Claude Haiku 5.5** (default): fast and cheap, about US$ 0.01 for 50 turns.
+   - **Claude Sonnet 5.5**: more natural conversation, about 20× the cost.
+6. Decide whether to keep **"Lembrar a chave neste navegador"** checked:
+   - checked: the key stays in this browser (`localStorage`) until you delete it;
+   - unchecked: the key lasts only until the tab is closed (`sessionStorage`). Prefer this on GitHub Pages, because `<you>.github.io` is shared by all your Pages sites.
+7. Pick a scenario, click **▶ Começar conversa**, then **🎙 Falar** and answer Sam.
+
+The first time you speak, the browser downloads the speech models from Hugging Face (about 80 MB to hear you and 90 MB for Sam's voice; Pronúncia adds about 320 MB for the sound check). After that they come from the browser cache.
+
+To change or remove the key: **Conversa → ⚙ Configurar** (*Apagar chave*). If the key ever leaks, revoke it in the Anthropic console.
+
+**Never commit an API key.** The key exists only in your browser: it is not part of the app state, backups or exports, so it never ends up in `data/minha-trilha.json` or anywhere else in the repository.
 
 ## Where your data lives
 
-Progress, goals and notes are stored in **your browser** (`localStorage`). Nothing is sent anywhere.
+Progress, goals and notes are stored in **your browser** (`localStorage`). They are never sent anywhere. The only data that leaves the browser is the text of your Conversa turns, sent to the Claude API, and the model downloads from Hugging Face.
 
 - **Back up** often: *Config → Exportar backup completo*.
 - **Move to another browser**: *Config → Importar JSON*.
