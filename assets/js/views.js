@@ -5,6 +5,10 @@ import {
   AREAS, LEVELS, STATUSES, COSTS, KINDS, LAB_STATUSES, WEEKDAYS,
   esc, safeUrl, uid, dateKey, addDays, parseKey, formatDate, parseTags, options, markdown,
 } from './util.js';
+import * as speech from './speech.js';
+import * as voice from './voice.js';
+import * as chat from './chat.js';
+import * as phonemes from './phonemes.js';
 
 const ui = {
   dayKey: dateKey(),
@@ -705,6 +709,436 @@ export const settings = {
         window.alert(`Importação falhou: ${err.message}`);
         return false;
       }
+    },
+  },
+};
+
+// ---------------------------------------------------------------- Pronúncia
+
+const pron = { deckId: null, index: 0, result: null, busy: false };
+
+function currentDeck() {
+  const decks = store.catalog.pronunciation;
+  return decks.find((d) => d.id === pron.deckId) ?? decks[0] ?? null;
+}
+
+function resetResult() {
+  if (pron.result?.audioUrl) URL.revokeObjectURL(pron.result.audioUrl);
+  pron.result = null;
+}
+
+function scoreClass(score) {
+  if (score == null) return '';
+  return score >= 90 ? 'good' : score >= 70 ? 'close' : 'bad';
+}
+
+function coloredSentence(ops) {
+  return ops.map((op) => {
+    if (op.type === 'ok') return `<span class="w ok">${esc(op.word)}</span>`;
+    if (op.type === 'sub') return `<span class="w bad" title="ouvi: ${esc(op.heard)}">${esc(op.word)}</span>`;
+    if (op.type === 'miss') return `<span class="w miss" title="não ouvi">${esc(op.word)}</span>`;
+    if (op.type === 'sound') return `<span class="w bad" title="som errado">${esc(op.word)}</span>`;
+    return `<span class="w extra" title="palavra a mais">+${esc(op.heard)}</span>`;
+  }).join(' ');
+}
+
+function resultBlock(result) {
+  if (result.error) {
+    return `<div class="card warn-box"><p>${esc(result.error)}</p>
+      ${result.audioUrl ? `<p class="row small"><span class="muted">O que foi gravado:</span><audio controls src="${esc(result.audioUrl)}"></audio></p>` : ''}</div>`;
+  }
+  const mistakes = result.ops.filter((o) => o.type !== 'ok' && o.type !== 'extra');
+  const verdict = result.score >= 90 ? 'Excelente! 🎉' : result.score >= 70 ? 'Quase lá. Corrija as palavras marcadas.' : 'Vamos de novo, mais devagar.';
+  return `<div class="pron-result">
+    <p class="row"><span class="score ${scoreClass(result.score)}">${result.score}%</span><strong>${verdict}</strong></p>
+    <p class="muted">Ouvi: <em lang="en">“${esc(result.heard || '(nada)')}”</em></p>
+    ${result.phones ? `<details class="small"><summary>Ver os sons (fonemas)</summary>
+      <p>Esperado: <code>${esc(result.expectedPhones)}</code></p><p>Você: <code>${esc(result.phones.join(' '))}</code></p></details>`
+      : result.soundCheck === false ? '<p class="muted small">Análise de sons indisponível nesta tentativa; avaliei só as palavras.</p>' : ''}
+    ${result.audioUrl ? `<p class="row small"><span class="muted">Sua voz:</span><audio controls src="${esc(result.audioUrl)}"></audio></p>` : ''}
+    ${mistakes.length ? `<h3>O que treinar</h3><ul class="list mistakes">${mistakes.map((o) => `<li class="row">
+        <button class="btn ghost" data-action="sayWord" data-text="${esc(o.word)}" title="Ouvir a palavra devagar">🐢</button>
+        <strong lang="en">${esc(o.word)}</strong>
+        <span class="muted">${o.type === 'sub' ? `ouvi “${esc(o.heard)}”` : o.type === 'miss' ? 'não ouvi' : 'som errado'}</span>
+        ${o.sounds?.length
+          ? o.sounds.map((e) => `<span class="small hint-text">🔈 ${esc(phonemes.describe(e, o.word))}</span>`).join('')
+          : `<span class="small hint-text">${esc(speech.hintFor(o.word))}</span>`}
+      </li>`).join('')}</ul>` : ''}
+  </div>`;
+}
+
+export const pronunciation = {
+  title: 'Pronúncia',
+  render() {
+    const deck = currentDeck();
+    if (!deck) return '<p class="card">Nenhuma frase em <code>data/pronuncia.json</code>.</p>';
+    const item = deck.items[Math.min(pron.index, deck.items.length - 1)];
+    const results = s().pronunciation.results;
+    const best = results[item.id]?.best;
+    const r = pron.result;
+
+    return `
+      <div class="daynav"><div class="daynav-title">
+        <h1>Pronúncia</h1>
+        <p class="muted">Ouça a frase, fale e veja quais palavras saíram erradas.</p>
+      </div></div>
+      <div class="row decks" role="group" aria-label="Blocos de frases">
+        ${store.catalog.pronunciation.map((d) => {
+          const p = store.deckProgress(d);
+          return `<button class="chip${d.id === deck.id ? ' accent' : ''}" data-action="pickDeck" data-id="${esc(d.id)}">${esc(d.title)} · ${p.good}/${p.total}</button>`;
+        }).join('')}
+      </div>
+      <section class="card pron">
+        <header class="row"><h2>${esc(deck.title)}</h2><span class="muted">${pron.index + 1}/${deck.items.length}${best != null ? ` · melhor ${best}%` : ''}</span></header>
+        <p class="muted small">💡 ${esc(deck.tip)}</p>
+        <p class="sentence" lang="en">${r?.ops ? coloredSentence(r.ops) : esc(item.en)}</p>
+        <p class="muted">${esc(item.pt)}</p>
+        <div class="row">
+          <button class="btn" data-action="say" data-rate="1">🔊 Ouvir</button>
+          <button class="btn" data-action="say" data-rate="0.7">🐢 Devagar</button>
+          <button class="btn primary mic" data-action="talk">🎙 Falar</button>
+          <span class="spacer"></span>
+          <button class="btn ghost" data-action="step" data-n="-1" aria-label="Frase anterior">‹</button>
+          <button class="btn ghost" data-action="step" data-n="1" aria-label="Próxima frase">›</button>
+        </div>
+        <p id="pron-status" class="muted small" aria-live="polite"></p>
+        ${r ? resultBlock(r) : ''}
+      </section>
+      <section class="card">
+        <h2>Frases do bloco</h2>
+        <ul class="list">${deck.items.map((it, i) => {
+          const b = results[it.id]?.best;
+          return `<li class="row pron-item${i === pron.index ? ' current' : ''}">
+            <button class="link" data-action="pickItem" data-i="${i}" lang="en">${esc(it.en)}</button>
+            <span class="score small ${scoreClass(b)}">${b != null ? `${b}%` : '—'}</span>
+          </li>`;
+        }).join('')}</ul>
+      </section>
+      <p class="muted small">Verde = certo · vermelho = trocado · cinza riscado = não ouvi. 90% ou mais conta como dominada.
+      Duas IAs rodam neste navegador (o áudio não sai do computador): o Whisper confere as palavras e um modelo de fonemas confere os sons (TH, R/H, i longo/curto, -s, "i" no fim).
+      Na 1ª vez elas baixam ~400 MB no total e depois ficam em cache.</p>`;
+  },
+  actions: {
+    pickDeck(el) { pron.deckId = el.dataset.id; pron.index = 0; resetResult(); },
+    pickItem(el) { pron.index = Number(el.dataset.i); resetResult(); },
+    step(el) {
+      const deck = currentDeck();
+      pron.index = (pron.index + Number(el.dataset.n) + deck.items.length) % deck.items.length;
+      resetResult();
+    },
+    async say(el) {
+      const item = currentDeck().items[pron.index];
+      await speech.play({ src: `data/audio/${item.id}.mp3`, text: item.en, rate: Number(el.dataset.rate) });
+      return false;
+    },
+    async sayWord(el) {
+      const word = el.dataset.text;
+      await speech.play({ src: `data/audio/w/${speech.wordKey(word)}.mp3`, text: word, rate: 0.75 });
+      return false;
+    },
+    async talk(el) {
+      if (voice.isRecording()) { voice.stopRecording(); return false; }
+      if (pron.busy) return false;
+      const item = currentDeck().items[pron.index];
+      pron.busy = true;
+      speech.stop();
+      resetResult();
+      try {
+        const heard = await listenOnce(el, document.getElementById('pron-status'), { sounds: true });
+        if (heard.error) { pron.result = heard; return; }
+        const ipa = store.catalog.pronunciationIpa[item.id];
+        const { ops, score } = mergeSounds(speech.align(item.en, heard.text), ipa, heard.phones);
+        pron.result = {
+          heard: heard.text, ops, score, audioUrl: heard.audioUrl, phones: heard.phones, soundCheck: Boolean(heard.phones && ipa),
+          expectedPhones: ipa?.map(([, ph]) => ph.join('')).join(' '),
+        };
+        store.recordAttempt(item.id, score);
+        store.save();
+      } catch (err) {
+        pron.result = { error: err.message };
+      } finally {
+        pron.busy = false;
+      }
+    },
+  },
+};
+
+// Combines the word check (Whisper) with the sound check (phonemes): a word Whisper
+// heard right still counts as wrong when one of its key sounds was off.
+function mergeSounds({ ops }, ipa, phones) {
+  if (ipa && phones?.length) {
+    const sounds = phonemes.comparePhonemes(ipa, phones);
+    let w = 0;
+    for (const op of ops) {
+      if (op.type === 'extra') continue;
+      const errs = sounds[w]?.errors ?? [];
+      w += 1;
+      if (!errs.length) {
+        // Whisper heard another word but the sounds match the target: trust the sounds.
+        if (op.type === 'sub') op.type = 'ok';
+        continue;
+      }
+      op.sounds = errs;
+      if (op.type === 'ok') op.type = 'sound';
+    }
+  }
+  const total = ops.filter((o) => o.type !== 'extra').length;
+  const good = ops.filter((o) => o.type === 'ok').length;
+  const extras = ops.filter((o) => o.type === 'extra').length;
+  return { ops, score: total ? Math.max(0, Math.round(((good - extras * 0.5) / total) * 100)) : 0 };
+}
+
+// Records one utterance and transcribes it with Whisper, driving the button and the
+// status line (mic meter, model download, "transcrevendo"). Shared by Pronúncia and Conversa.
+// Resolves with { text, audioUrl } or { error, audioUrl }.
+async function listenOnce(button, status, { sounds = false } = {}) {
+  const setStatus = (html) => { if (status) status.innerHTML = html; };
+  button.textContent = '⏹ Parar';
+  button.classList.add('recording');
+  setStatus('<span class="meter" aria-hidden="true"><span></span></span> <span class="mic-name">abrindo microfone…</span>');
+  voice.warm({ stt: true, phonemes: sounds }).catch(() => {}); // Load the models while the user speaks.
+  const rec = await voice.record({
+    onLevel(level, mic) {
+      status?.querySelector('.meter span')?.style.setProperty('width', `${Math.round(level * 100)}%`);
+      const name = status?.querySelector('.mic-name');
+      if (name && name.dataset.mic !== mic) { name.dataset.mic = mic; name.textContent = `🎙 ${mic} · fale agora (para sozinho no silêncio)`; }
+    },
+  });
+  button.textContent = '⏳ Transcrevendo…';
+  button.classList.remove('recording');
+  button.disabled = true;
+  if (!rec.spoke) {
+    return {
+      error: rec.peak < 0.05
+        ? `O microfone "${rec.mic}" quase não captou som. Confira em chrome://settings/content/microphone se é o fifine e se o volume de entrada está alto.`
+        : 'Não detectei fala. Fale logo depois de clicar, um pouco mais alto.',
+      audioUrl: rec.url,
+    };
+  }
+  const off = voice.onProgress(({ kind, loaded, total }) => {
+    const what = { stt: 'a IA que ouve as palavras (~80 MB)', phonemes: 'a IA que ouve os sons (~320 MB)' }[kind];
+    if (what) setStatus(`⬇ Baixando ${what}, só na 1ª vez: ${Math.round((loaded / total) * 100)}%`);
+  });
+  try {
+    setStatus(sounds ? '⏳ Analisando palavras e sons…' : '⏳ Transcrevendo…');
+    const { text, phones } = sounds ? await voice.analyze(rec.blob) : { text: await voice.transcribe(rec.blob), phones: null };
+    if (!text || /^\[.*\]$|^\(.*\)$/.test(text)) {
+      return { error: 'Captei som, mas não entendi palavras em inglês. Tente de novo, mais perto do microfone.', audioUrl: rec.url };
+    }
+    return { text, phones, audioUrl: rec.url };
+  } finally {
+    off();
+  }
+}
+
+// ---------------------------------------------------------------- Conversa
+
+const conv = {
+  settings: chat.loadSettings(),
+  session: chat.newConversation('free'),
+  setup: false,
+  busy: false,
+  autoSpeak: true,
+  error: '',
+};
+
+function samSays(text, speed = 1) {
+  const status = document.getElementById('conv-status');
+  const off = voice.onProgress(({ kind, loaded, total }) => {
+    if (kind === 'tts' && status) status.textContent = `⬇ Baixando a voz do Sam (só na 1ª vez): ${Math.round((loaded / total) * 100)}%`;
+  });
+  if (status) status.textContent = '🔊 Sam está falando…';
+  return voice.speak(text, { voice: conv.settings.voice, speed })
+    .catch((err) => { if (status) status.textContent = `Não consegui gerar a voz: ${err.message}`; })
+    .finally(() => { off(); if (status?.textContent.startsWith('🔊')) status.textContent = ''; });
+}
+
+async function converse(text, display) {
+  conv.busy = true;
+  conv.error = '';
+  if (display) conv.session.log.push({ who: 'me', text: display });
+  try {
+    const out = await chat.send(conv.session, text, { settings: conv.settings, learnerName: s().profile.name });
+    const mine = conv.session.log.at(-1);
+    if (display && mine?.who === 'me' && out.better?.trim()) {
+      mine.better = out.better.trim();
+      mine.tip = out.tip_pt?.trim() ?? '';
+    }
+    conv.session.log.push({ who: 'sam', text: out.reply, pt: out.reply_pt });
+    if (conv.autoSpeak) setTimeout(() => samSays(out.reply), 0);
+  } catch (err) {
+    conv.error = err.message;
+    if (display) conv.session.log.at(-1).failed = true;
+  } finally {
+    conv.busy = false;
+  }
+}
+
+function convSetup() {
+  const st = conv.settings;
+  return `<section class="card stack">
+    <h2>Configurar conversa</h2>
+    <p class="muted small">O Sam é o Claude, a IA da Anthropic. Para conversar você precisa de uma <strong>chave da API</strong>:
+      crie em <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com → API keys</a>,
+      adicione alguns dólares de crédito e, de preferência, defina um limite de gasto.</p>
+    <form class="stack" data-submit="convSettings">
+      <label class="small">Chave da API
+        <input name="apiKey" type="password" autocomplete="off" spellcheck="false" placeholder="sk-ant-..." value="${esc(st.apiKey)}" required></label>
+      <label class="small">Modelo <select name="model">${options(chat.MODELS, st.model)}</select></label>
+      <label class="small">Voz do Sam <select name="voice">${options(voice.VOICES, st.voice)}</select></label>
+      <label><input type="checkbox" name="remember"${st.remember ? ' checked' : ''}> Lembrar a chave neste navegador (desmarcado: some ao fechar a aba)</label>
+      <div class="row">
+        <button class="btn primary">Salvar</button>
+        ${st.apiKey ? '<button type="button" class="btn ghost" data-action="convCloseSetup">Cancelar</button><button type="button" class="btn ghost danger" data-action="convForgetKey">Apagar chave</button>' : ''}
+      </div>
+    </form>
+    <p class="muted small">🔒 A chave fica só neste navegador e vai direto para api.anthropic.com. Ela não entra no backup, na exportação nem no repositório. Não use em computador compartilhado.
+      Na versão do GitHub Pages, prefira não lembrar a chave: o endereço <code>github.io</code> é compartilhado com seus outros sites.
+      O que você fala vira texto <strong>no seu computador</strong> (Whisper) e só o texto vai para a API do Claude.</p>
+  </section>`;
+}
+
+function convMessage(m, i) {
+  if (m.who === 'sam') {
+    return `<li class="msg sam">
+      <span class="who">Sam</span>
+      <p lang="en">${esc(m.text)}</p>
+      <div class="row small">
+        <button class="btn ghost" data-action="convSay" data-i="${i}" title="Ouvir de novo">🔊</button>
+        <button class="btn ghost" data-action="convSay" data-i="${i}" data-speed="0.75" title="Ouvir devagar">🐢</button>
+        ${m.pt ? `<details><summary>Tradução</summary><p>${esc(m.pt)}</p></details>` : ''}
+      </div>
+    </li>`;
+  }
+  return `<li class="msg me${m.failed ? ' failed' : ''}">
+    <span class="who">Você</span>
+    <p lang="en">${esc(m.text)}</p>
+    ${m.better ? `<div class="fix">
+      <p>✏️ Melhor: <strong lang="en">${esc(m.better)}</strong>
+        <button class="btn ghost" data-action="convSayBetter" data-i="${i}" title="Ouvir a frase correta">🔊</button></p>
+      ${m.tip ? `<p class="small">${esc(m.tip)}</p>` : ''}
+    </div>` : ''}
+    ${m.failed ? '<p class="small warn-box">Não enviada. Tente de novo.</p>' : ''}
+  </li>`;
+}
+
+export const conversation = {
+  title: 'Conversa',
+  render() {
+    const st = conv.settings;
+    const head = `<div class="daynav"><div class="daynav-title">
+        <h1>Conversa</h1>
+        <p class="muted">Converse por voz com o Sam, um nativo dos EUA. Ele fala simples (nível A1) e corrige seus erros.</p>
+      </div>
+      ${st.apiKey && !conv.setup ? '<button class="btn ghost" data-action="convOpenSetup">⚙ Configurar</button>' : ''}</div>`;
+    if (!st.apiKey || conv.setup) return head + convSetup();
+    if (!conv.warmed) {
+      conv.warmed = true;
+      setTimeout(() => voice.warm({ tts: true }).catch(() => {}), 0); // Sam's voice ready before he speaks.
+    }
+
+    const log = conv.session.log;
+    const cost = chat.estimateCost(conv.session, st.model);
+    return `${head}
+      <div class="row decks" role="group" aria-label="Cenário">
+        ${Object.entries(chat.SCENARIOS).map(([id, sc]) => `<button class="chip${id === conv.session.scenario ? ' accent' : ''}" data-action="convScenario" data-id="${id}">${esc(sc.title)}</button>`).join('')}
+      </div>
+      <section class="card conv">
+        ${log.length ? `<ol class="chatlog" aria-live="polite">${log.map(convMessage).reverse().join('')}</ol>`
+          : `<div class="stack conv-empty"><p class="muted">Cenário: <strong>${esc(chat.SCENARIOS[conv.session.scenario].title)}</strong>. O Sam começa a conversa.</p>
+             <button class="btn primary" data-action="convStart"${conv.busy ? ' disabled' : ''}>▶ Começar conversa</button></div>`}
+        ${conv.busy ? '<p class="muted">💭 Sam está pensando…</p>' : ''}
+        ${conv.error ? `<p class="warn-box">${esc(conv.error)}</p>` : ''}
+        ${log.length ? `<div class="row conv-controls">
+          <button class="btn primary mic" data-action="convTalk"${conv.busy ? ' disabled' : ''}>🎙 Falar</button>
+          <form class="row add grow" data-submit="convType">
+            <input name="text" placeholder="…ou digite em inglês" autocomplete="off"${conv.busy ? ' disabled' : ''}>
+            <button class="btn"${conv.busy ? ' disabled' : ''}>Enviar</button>
+          </form>
+        </div>` : ''}
+        <p id="conv-status" class="muted small" aria-live="polite"></p>
+      </section>
+      <div class="row small muted">
+        <label><input type="checkbox" data-change="convAutoSpeak"${conv.autoSpeak ? ' checked' : ''}> Sam fala as respostas em voz alta</label>
+        <span class="spacer"></span>
+        <span>${esc(chat.MODELS[st.model] ?? st.model)} · sessão ≈ US$ ${cost.toFixed(4)}</span>
+        <button class="btn ghost" data-action="convReset">Nova conversa</button>
+      </div>`;
+  },
+  actions: {
+    convOpenSetup() { conv.setup = true; },
+    convCloseSetup() { conv.setup = false; },
+    convForgetKey() {
+      if (!window.confirm('Apagar a chave da API deste navegador?')) return false;
+      conv.settings.apiKey = '';
+      chat.saveSettings(conv.settings);
+    },
+    convScenario(el) {
+      if (el.dataset.id === conv.session.scenario) return false;
+      if (conv.session.log.length && !window.confirm('Trocar de cenário começa uma conversa nova. Continuar?')) return false;
+      conv.session = chat.newConversation(el.dataset.id);
+      conv.error = '';
+    },
+    convReset() {
+      if (conv.session.log.length && !window.confirm('Começar uma conversa nova?')) return false;
+      conv.session = chat.newConversation(conv.session.scenario);
+      conv.error = '';
+    },
+    async convStart(el) {
+      if (conv.busy) return false;
+      el.disabled = true;
+      el.textContent = '💭 Sam está pensando…';
+      voice.warm({ tts: true }).catch(() => {}); // Fetch the voice while Claude answers.
+      await converse(chat.OPENING, null);
+    },
+    async convTalk(el) {
+      if (voice.isRecording()) { voice.stopRecording(); return false; }
+      if (conv.busy) return false;
+      voice.stopSpeaking();
+      conv.busy = true;
+      let heard;
+      try {
+        heard = await listenOnce(el, document.getElementById('conv-status'));
+      } catch (err) {
+        heard = { error: err.message };
+      } finally {
+        conv.busy = false;
+      }
+      if (heard.audioUrl) URL.revokeObjectURL(heard.audioUrl);
+      if (heard.error) { conv.error = heard.error; return; }
+      el.textContent = '💭 Sam está pensando…';
+      await converse(heard.text, heard.text);
+    },
+    convSay(el) {
+      const m = conv.session.log[Number(el.dataset.i)];
+      samSays(m.text, Number(el.dataset.speed ?? 1));
+      return false;
+    },
+    convSayBetter(el) {
+      samSays(conv.session.log[Number(el.dataset.i)].better, 0.9);
+      return false;
+    },
+  },
+  changes: {
+    convAutoSpeak(el) { conv.autoSpeak = el.checked; return false; },
+  },
+  submits: {
+    convSettings(form) {
+      const data = new FormData(form);
+      conv.settings = {
+        apiKey: String(data.get('apiKey')).trim(),
+        model: String(data.get('model')),
+        voice: String(data.get('voice')),
+        remember: data.get('remember') === 'on',
+      };
+      if (!chat.saveSettings(conv.settings)) window.alert('O navegador bloqueou o armazenamento local; a chave vale só até fechar a aba.');
+      conv.setup = false;
+    },
+    async convType(form) {
+      const text = String(new FormData(form).get('text') ?? '').trim();
+      if (!text || conv.busy) return false;
+      voice.stopSpeaking();
+      await converse(text, text);
     },
   },
 };

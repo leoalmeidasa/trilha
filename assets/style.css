@@ -177,3 +177,46 @@ summary { cursor: pointer; }
 .wday.is-today .dn { color: var(--accent); }
 .wday.selected { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
 @media (max-width: 480px) { .seg-btn { min-width: 2.2rem; padding: 0 .5rem; } }
+
+/* Pronunciation */
+.decks { margin: 1rem 0 0; }
+.pron .sentence { font-size: 1.5rem; line-height: 1.6; margin: .6rem 0 .2rem; }
+.pron .spacer { flex: 1; }
+.btn.mic { font-weight: 600; }
+.btn:disabled { opacity: .6; cursor: default; }
+.w { border-radius: 4px; padding: 0 .15rem; }
+.w.ok { color: var(--ok); }
+.w.bad { color: var(--danger); text-decoration: underline wavy; text-underline-offset: .25em; }
+.w.miss { color: var(--muted); text-decoration: line-through; }
+.w.extra { color: var(--warn); font-size: .8em; }
+.score { font-weight: 700; color: var(--muted); }
+.score.good { color: var(--ok); }
+.score.close { color: var(--warn); }
+.score.bad { color: var(--danger); }
+.pron-result .score { font-size: 1.6rem; }
+.pron-result audio { height: 2rem; max-width: 100%; }
+.mistakes li { padding: .4rem 0; border-top: 1px solid var(--line); }
+.hint-text { flex: 1 1 100%; color: var(--text); }
+.warn-box { color: var(--warn); }
+.pron-item { justify-content: space-between; padding: .35rem 0; border-top: 1px solid var(--line); }
+.pron-item.current .link { color: var(--accent); font-weight: 600; }
+.meter { display: inline-block; width: 6rem; height: .55rem; border-radius: 4px; background: var(--heat0); overflow: hidden; vertical-align: middle; }
+.meter span { display: block; height: 100%; width: 0; background: var(--ok); transition: width .08s; }
+.interim { color: var(--text); }
+
+/* Conversation */
+.daynav > .btn { align-self: flex-start; }
+.conv .chatlog { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column-reverse; gap: .7rem; max-height: 60vh; overflow-y: auto; }
+.msg { max-width: 85%; padding: .6rem .8rem; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); }
+.msg p { margin: .15rem 0; }
+.msg .who { font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.msg.sam { align-self: flex-start; border-color: var(--english); }
+.msg.sam > p { font-size: 1.1rem; }
+.msg.me { align-self: flex-end; }
+.msg.failed { opacity: .7; }
+.msg .fix { margin-top: .4rem; padding: .4rem .6rem; border-left: 3px solid var(--warn); background: var(--card); border-radius: 6px; }
+.msg details { border: 0; padding: 0; }
+.conv-controls { margin-top: 1rem; }
+.conv-controls .grow { flex: 1 1 16rem; margin: 0; }
+.conv-controls .grow input { flex: 1; }
+.btn.recording { background: var(--danger); border-color: var(--danger); }

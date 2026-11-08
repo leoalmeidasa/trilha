@@ -6,6 +6,8 @@ const routes = {
   '#/trilha': views.track,
   '#/recursos': views.resources,
   '#/notas': views.notes,
+  '#/pronuncia': views.pronunciation,
+  '#/conversa': views.conversation,
   '#/labs': views.labs,
   '#/painel': views.dashboard,
   '#/config': views.settings,

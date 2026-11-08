@@ -5,7 +5,7 @@ import { uid, dateKey, parseKey, addDays } from './util.js';
 const STORAGE_KEY = 'trilha:v1';
 export const SCHEMA_VERSION = 1;
 
-export const catalog = { resources: [], templates: [] };
+export const catalog = { resources: [], templates: [], pronunciation: [], pronunciationIpa: {} };
 export let state = null;
 export let source = 'local'; // 'local' | 'published' | 'new'
 
@@ -20,6 +20,7 @@ export function emptyState() {
     notes: [],
     labs: [],
     customResources: [],
+    pronunciation: { results: {} },
   };
 }
 
@@ -45,12 +46,16 @@ export function defaultWeeklyGoals() {
 }
 
 export async function init() {
-  const [resources, templates] = await Promise.all([
+  const [resources, templates, pronunciation, pronunciationIpa] = await Promise.all([
     fetchJson('data/resources.json', []),
     fetchJson('data/templates/index.json', []),
+    fetchJson('data/pronuncia.json', []),
+    fetchJson('data/pronuncia-ipa.json', {}),
   ]);
   catalog.resources = resources;
   catalog.templates = templates;
+  catalog.pronunciation = pronunciation;
+  catalog.pronunciationIpa = pronunciationIpa;
 
   const saved = readLocal();
   if (saved) {
@@ -113,7 +118,25 @@ function migrate(data) {
     settings: { ...base.settings, ...data.settings },
     track: { ...base.track, ...data.track },
     weeklyGoals: data.weeklyGoals ?? base.weeklyGoals,
+    pronunciation: { results: { ...data.pronunciation?.results } },
   };
+}
+
+// ---------- pronunciation ----------
+
+// Keeps best/last score per sentence and how many attempts were made each day.
+export function recordAttempt(itemId, score, key = dateKey()) {
+  const results = state.pronunciation.results;
+  const prev = results[itemId] ?? { best: 0, last: 0, tries: 0 };
+  results[itemId] = { best: Math.max(prev.best, score), last: score, tries: prev.tries + 1, at: key };
+  return results[itemId];
+}
+
+export function deckProgress(deck) {
+  const results = state.pronunciation.results;
+  const total = deck.items.length;
+  const good = deck.items.filter((item) => (results[item.id]?.best ?? 0) >= 90).length;
+  return { total, good, pct: total ? Math.round((good / total) * 100) : 0 };
 }
 
 // ---------- catalog / track ----------

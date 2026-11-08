@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Same policy as nginx/default.conf, for hosts that send no headers (GitHub Pages). -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self' blob:; connect-src 'self' blob: data: https://api.anthropic.com https://huggingface.co https://*.huggingface.co https://*.hf.co; base-uri 'self'; form-action 'self'">
+  <meta name="referrer" content="no-referrer">
   <meta name="description" content="Trilha: monte sua trilha de estudos DevOps + inglês com metas diárias e um catálogo de recursos grátis e pagos.">
   <title>Trilha</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
@@ -16,6 +19,8 @@
       <a href="#/hoje">Hoje</a>
       <a href="#/trilha">Trilha</a>
       <a href="#/recursos">Recursos</a>
+      <a href="#/pronuncia">Pronúncia</a>
+      <a href="#/conversa">Conversa</a>
       <a href="#/notas">Notas</a>
       <a href="#/labs">Labs</a>
       <a href="#/painel">Painel</a>
