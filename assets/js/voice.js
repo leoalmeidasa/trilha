@@ -187,23 +187,16 @@ export async function synthesize(text, { voice = 'af_heart', speed = 1 } = {}) {
   return ttsCache.get(key);
 }
 
-// Splits a reply into sentences so the first one plays while the next is synthesized.
-export function sentences(text) {
-  return String(text).match(/[^.!?]+[.!?]+["')\]]*|[^.!?]+$/g)?.map((t) => t.trim()).filter(Boolean) ?? [];
-}
-
 let speakToken = 0;
 
+// Synthesizes the whole reply in one go: Kokoro keeps the natural intonation across
+// sentences, and playback has no gaps (per-sentence playback stalled on slow CPUs).
 export async function speak(text, options = {}) {
   stopSpeaking();
   const token = ++speakToken;
-  const parts = sentences(text);
-  const jobs = parts.map((part) => synthesize(part, options)); // All queued at once, played in order.
-  for (const job of jobs) {
-    const { audio, rate } = await job;
-    if (token !== speakToken) return; // A newer speak() or stopSpeaking() took over.
-    await playBuffer(audio, rate);
-  }
+  const { audio, rate } = await synthesize(text, options);
+  if (token !== speakToken) return; // A newer speak() or stopSpeaking() took over.
+  await playBuffer(audio, rate);
 }
 
 function playBuffer(audio, rate) {

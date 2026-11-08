@@ -7,7 +7,9 @@
 import { pipeline, env, KokoroTTS, AutoModelForCTC, AutoFeatureExtractor } from '../vendor/ai.js';
 
 env.allowLocalModels = false;
-env.backends.onnx.wasm.numThreads = 1; // No cross-origin isolation, so no wasm threads.
+// Threads need cross-origin isolation (COOP/COEP headers, set by nginx). GitHub Pages
+// cannot send them, so there the models run on a single thread.
+env.backends.onnx.wasm.numThreads = self.crossOriginIsolated ? Math.max(1, Math.min(4, (navigator.hardwareConcurrency || 2) - 1)) : 1;
 // Serve the ONNX runtime from this site (assets/vendor/ort) instead of a CDN.
 env.backends.onnx.wasm.wasmPaths = new URL('../vendor/ort/', import.meta.url).href;
 
