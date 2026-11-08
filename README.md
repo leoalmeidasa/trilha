@@ -52,6 +52,28 @@ Everything except the **Conversa** tab works without any account or key. Convers
 
 The first time you speak, the browser downloads the speech models from Hugging Face (about 80 MB to hear you and 90 MB for Sam's voice; Pronúncia adds about 320 MB for the sound check). After that they come from the browser cache.
 
+### What it costs
+
+Only the Claude API is paid. Everything else is free:
+
+| Service | Used for | Cost |
+|---|---|---|
+| Whisper, phoneme model, Kokoro (run in your browser) | hearing you, checking sounds, Sam's voice | free |
+| Hugging Face | downloading those models once | free |
+| Pre-rendered sentence audio (`data/audio/`) | Pronúncia model voice | free |
+| **Claude API** (Anthropic) | Sam's replies and corrections in Conversa | **paid per use** |
+
+Claude API list prices (per million tokens, November 2026, check the [official pricing](https://www.anthropic.com/pricing#api) for current values):
+
+| Model | Input | Output | Measured cost per turn* | ~1,000 turns |
+|---|---|---|---|---|
+| Claude Haiku 5.5 (default) | US$ 0.10 | US$ 0.50 | ≈ US$ 0.0002 | ≈ US$ 0.20 |
+| Claude Sonnet 5.5 | US$ 2.00 | US$ 10.00 | ≈ US$ 0.004 | ≈ US$ 4.00 |
+
+\* Measured in real tests with short A1 conversations (4 turns: Haiku US$ 0.0007, Sonnet US$ 0.015). Each turn resends the whole conversation, so turns get a little more expensive as a conversation grows; **Nova conversa** starts over. The app shows an estimate of the current session cost under the chat.
+
+In practice: 20 minutes a day (about 40 turns) is roughly 1,200 turns a month, about **US$ 0.25/month with Haiku** or **US$ 5/month with Sonnet**. A spend limit in the Anthropic console caps any surprise.
+
 To change or remove the key: **Conversa → ⚙ Configurar** (*Apagar chave*). If the key ever leaks, revoke it in the Anthropic console.
 
 **Never commit an API key.** The key exists only in your browser: it is not part of the app state, backups or exports, so it never ends up in `data/minha-trilha.json` or anywhere else in the repository.
