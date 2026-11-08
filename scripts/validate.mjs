@@ -63,9 +63,29 @@ for (const meta of templates) {
 }
 
 if (existsSync('data/minha-trilha.json')) load('data/minha-trilha.json');
+const ipa = load('data/pronuncia-ipa.json') ?? {};
+
+const decks = load('data/pronuncia.json') ?? [];
+const itemIds = new Set();
+let itemCount = 0;
+for (const [i, deck] of decks.entries()) {
+  const where = `pronuncia[${i}] (${deck.id ?? 'sem id'})`;
+  if (!deck.id || !/^[a-z0-9-]+$/.test(deck.id)) fail(`${where}: id deve ser kebab-case`);
+  if (!deck.title || !deck.tip) fail(`${where}: precisa de title e tip`);
+  if (!Array.isArray(deck.items) || !deck.items.length) fail(`${where}: sem items`);
+  for (const item of deck.items ?? []) {
+    itemCount += 1;
+    if (!item.id || itemIds.has(item.id)) fail(`${where}: item com id vazio ou duplicado (${item.id})`);
+    itemIds.add(item.id);
+    if (!item.en || !item.pt) fail(`${where} › ${item.id}: precisa de en e pt`);
+    if (/[0-9]/.test(item.en ?? '')) fail(`${where} › ${item.id}: escreva números por extenso`);
+    if (item.id && !ipa[item.id]) fail(`${where} › ${item.id}: falta em data/pronuncia-ipa.json (rode scripts/gen-ipa.py)`);
+    if (item.id && !existsSync(`data/audio/${item.id}.mp3`)) fail(`${where} › ${item.id}: falta data/audio/${item.id}.mp3 (rode scripts/gen-audio.py)`);
+  }
+}
 
 if (errors.length) {
   console.error(errors.map((e) => `✗ ${e}`).join('\n'));
   process.exit(1);
 }
-console.log(`✓ ${resources.length} recursos, ${templates.length} modelos válidos`);
+console.log(`✓ ${resources.length} recursos, ${templates.length} modelos, ${itemCount} frases de pronúncia válidos`);

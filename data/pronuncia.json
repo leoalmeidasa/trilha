@@ -1,0 +1,93 @@
+[
+  {
+    "id": "rotina",
+    "title": "Rotina (Simple Present)",
+    "level": "A1",
+    "tip": "Frases do dia a dia. Fale no ritmo natural, ligando as palavras.",
+    "items": [
+      { "id": "rotina-01", "en": "I wake up at seven every day.", "pt": "Eu acordo às sete todo dia." },
+      { "id": "rotina-02", "en": "I drink coffee in the morning.", "pt": "Eu bebo café de manhã." },
+      { "id": "rotina-03", "en": "She works in a big office.", "pt": "Ela trabalha num escritório grande." },
+      { "id": "rotina-04", "en": "He doesn't like Mondays.", "pt": "Ele não gosta de segundas." },
+      { "id": "rotina-05", "en": "Do you speak English?", "pt": "Você fala inglês?" },
+      { "id": "rotina-06", "en": "We usually have lunch at noon.", "pt": "Nós geralmente almoçamos ao meio-dia." },
+      { "id": "rotina-07", "en": "They never watch TV at night.", "pt": "Eles nunca assistem TV à noite." },
+      { "id": "rotina-08", "en": "Where does she live?", "pt": "Onde ela mora?" },
+      { "id": "rotina-09", "en": "My brother studies on Saturdays.", "pt": "Meu irmão estuda aos sábados." },
+      { "id": "rotina-10", "en": "I go to bed at eleven.", "pt": "Eu vou dormir às onze." }
+    ]
+  },
+  {
+    "id": "s-final",
+    "title": "-s final: /s/ /z/ /ɪz/",
+    "level": "A1",
+    "tip": "works /s/ · plays /z/ · watches /ɪz/ (sílaba extra só depois de s, sh, ch, x, z, ge, ce).",
+    "items": [
+      { "id": "s-01", "en": "He works and she sleeps.", "pt": "Ele trabalha e ela dorme." },
+      { "id": "s-02", "en": "She plays the guitar.", "pt": "Ela toca violão." },
+      { "id": "s-03", "en": "He watches movies on Fridays.", "pt": "Ele assiste filmes às sextas." },
+      { "id": "s-04", "en": "My mother cooks and my father washes the dishes.", "pt": "Minha mãe cozinha e meu pai lava a louça." },
+      { "id": "s-05", "en": "The bus leaves at eight.", "pt": "O ônibus sai às oito." },
+      { "id": "s-06", "en": "She uses her phone a lot.", "pt": "Ela usa muito o celular." },
+      { "id": "s-07", "en": "He fixes computers.", "pt": "Ele conserta computadores." },
+      { "id": "s-08", "en": "It rains a lot in January.", "pt": "Chove muito em janeiro." }
+    ]
+  },
+  {
+    "id": "th",
+    "title": "TH: think / this",
+    "level": "A1",
+    "tip": "Língua entre os dentes. TH surdo (think) só sopra; TH sonoro (this) vibra.",
+    "items": [
+      { "id": "th-01", "en": "Thank you very much.", "pt": "Muito obrigado." },
+      { "id": "th-02", "en": "I think this is the right one.", "pt": "Acho que este é o certo." },
+      { "id": "th-03", "en": "My mother and father are there.", "pt": "Minha mãe e meu pai estão lá." },
+      { "id": "th-04", "en": "This is my brother.", "pt": "Este é meu irmão." },
+      { "id": "th-05", "en": "They have three children.", "pt": "Eles têm três filhos." },
+      { "id": "th-06", "en": "Today is Thursday.", "pt": "Hoje é quinta-feira." },
+      { "id": "th-07", "en": "I go to the gym with them.", "pt": "Eu vou à academia com eles." }
+    ]
+  },
+  {
+    "id": "consoante-final",
+    "title": "Consoante final (sem \"i\" no fim)",
+    "level": "A1",
+    "tip": "Termine seco na consoante: big, not bigi; good, not goodi; like, not laiki.",
+    "items": [
+      { "id": "cf-01", "en": "I like big dogs.", "pt": "Eu gosto de cachorros grandes." },
+      { "id": "cf-02", "en": "This book is good.", "pt": "Este livro é bom." },
+      { "id": "cf-03", "en": "I work at night.", "pt": "Eu trabalho à noite." },
+      { "id": "cf-04", "en": "That is a bad idea.", "pt": "Essa é uma má ideia." },
+      { "id": "cf-05", "en": "Stop the car.", "pt": "Pare o carro." },
+      { "id": "cf-06", "en": "I need help.", "pt": "Eu preciso de ajuda." }
+    ]
+  },
+  {
+    "id": "vogais-i",
+    "title": "Vogal curta × longa: ship / sheep",
+    "level": "A1",
+    "tip": "/ɪ/ curto e relaxado (ship, live, sit). /iː/ longo e sorrindo (sheep, leave, seat).",
+    "items": [
+      { "id": "vi-01", "en": "I live here.", "pt": "Eu moro aqui." },
+      { "id": "vi-02", "en": "I leave at six.", "pt": "Eu saio às seis." },
+      { "id": "vi-03", "en": "Sit in this seat.", "pt": "Sente neste assento." },
+      { "id": "vi-04", "en": "The ship is big.", "pt": "O navio é grande." },
+      { "id": "vi-05", "en": "The sheep is white.", "pt": "A ovelha é branca." },
+      { "id": "vi-06", "en": "Please eat it.", "pt": "Por favor, coma isso." }
+    ]
+  },
+  {
+    "id": "r-h",
+    "title": "R e H",
+    "level": "A1",
+    "tip": "H inglês = R de \"rato\" (um sopro). R inglês = língua recuada, sem tocar o céu da boca.",
+    "items": [
+      { "id": "rh-01", "en": "I have a red car.", "pt": "Eu tenho um carro vermelho." },
+      { "id": "rh-02", "en": "His house is right here.", "pt": "A casa dele é bem aqui." },
+      { "id": "rh-03", "en": "It is hot today.", "pt": "Está quente hoje." },
+      { "id": "rh-04", "en": "I read every night.", "pt": "Eu leio toda noite." },
+      { "id": "rh-05", "en": "How are you?", "pt": "Como você está?" },
+      { "id": "rh-06", "en": "Run to the room.", "pt": "Corra para o quarto." }
+    ]
+  }
+]
